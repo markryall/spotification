@@ -1,19 +1,13 @@
 require 'sinatra'
-require 'slim'
 require 'sinatra/content_for'
-require 'lastfm'
+require 'slim'
 require 'spotify'
 require 'track_queue'
 
-include Lastfm
 include Spotify
 include TrackQueue
 
 set :root, File.dirname(__FILE__)+'/..'
-
-get '/lastfm/:user' do |user|
-  slim :index, locals: {tracks: recent_lastfm_tracks_for(user) }
-end
 
 get '/queue' do
   slim :queue, locals: { queue: self }
@@ -31,4 +25,14 @@ end
 
 post '/track' do
   enqueue params[:track]
+end
+
+if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
+  require 'lastfm'
+
+  include Lastfm
+
+  get '/lastfm' do |user|
+    slim :lastfm, locals: {tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER']) }
+  end
 end
