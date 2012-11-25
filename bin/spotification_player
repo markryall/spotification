@@ -10,7 +10,6 @@ include SpotifyRemote
 
 loop do
   begin
-    puts player_state
     if player_state == 'stopped'
       track = dequeue
       if track
