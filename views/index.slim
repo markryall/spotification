@@ -14,5 +14,6 @@ html
               img src="#{track['image'].find{|i| i['size'] == 'large'}['#text']}"
             div.span3
               h2 = track['name']
-              h3 = track['artist']['name']
+              p = track['album']['#text']
+              p = track['artist']['#text']
     script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"
