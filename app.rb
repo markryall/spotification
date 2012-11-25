@@ -3,9 +3,11 @@ require 'slim'
 require 'sinatra/content_for'
 require 'lastfm'
 require 'spotify'
+require 'track_queue'
 
 include Lastfm
 include Spotify
+include TrackQueue
 
 get '/lastfm/:user' do |user|
   slim :index, locals: {tracks: recent_lastfm_tracks_for(user) }
@@ -22,5 +24,5 @@ post '/tracks' do
 end
 
 post '/track' do
-  puts params[:track]
+  enqueue params[:track]
 end
