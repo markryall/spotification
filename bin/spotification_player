@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+$: << File.dirname(__FILE__)+'/../lib'
+
+require 'track_queue'
+require 'spotify_remote'
+
+include TrackQueue
+include SpotifyRemote
+
+loop do
+  begin
+    puts player_state
+    if player_state == 'stopped'
+      track = dequeue
+      if track
+        puts "playing: #{track['name']} by #{track['artists']} from #{track['album']}"
+        play track['id']
+      end
+    end
+    sleep 5
+  rescue Interrupt
+    exit
+  end
+end
