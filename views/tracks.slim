@@ -1,6 +1,6 @@
-form class="form-search" action="/search" method="post"
-  input type="text" class="input-medium search-query" name="criteria" value="#{criteria}"
-  button type="submit" class="btn" Search
+form.form-search action="/search" method="post"
+  input.track-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
+  button type="submit" class="btn btn-primary" Search
 
 - tracks.each do |track|
   div.hero-unit

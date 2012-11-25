@@ -1,9 +1,9 @@
 - content_for :js do
   script src="/search.js" type="text/javascript"
 
-form class="form-search" action="/tracks" method="post"
-  input type="text" class="input-medium search-query" name="criteria" value="#{criteria}"
-  button type="submit" class="btn" Search
+form.form-search action="/tracks" method="post"
+  input.track-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
+  button type="submit" class="btn btn-primary" Search
 
 - tracks.each do |track|
   - id, name, album, artists = track['href'], track['name'], track['album']['name'], track['artists'].map{|a| a['name']}.join(',')
