@@ -19,9 +19,9 @@ Install prerequisites:
 
 There are two processes: the web server process and the player.
 
-The web server allows remote users to search for tracks (using the spotify web api), enqueue them and see (using the lastfm api).  If configiured, the web server can also show the recently played tracks for a given user on lastfm.
+The web server allows remote users to search spotify for tracks (using the spotify web api) and enqueue them.  If configiured, the web server can also show the recently played tracks for a given user on lastfm (using the lastfm api).
 
-The player monitors the spotify application and the queue (using applescript - hence the mac os x restriction).  When spotify has stopped playing, the player will tell it to start playing the next track in the queue.
+The player monitors the spotify application and the queue (using applescript - hence the mac os x restriction).  When spotify has stopped playing, the player will tell it to start playing the next track in the queue.  Note that this queue has nothing to do with the spotify queue.
 
 So in one terminal session:
 
@@ -35,7 +35,7 @@ In another terminal session:
 
 ## Usage
 
-There's really not much too this at the moment:
+There's really not much too this:
 
 To search for tracks, browse to http://localhost:9292/tracks and execute a search.
 
@@ -48,3 +48,10 @@ Note that the player process will wait until the spotify status is 'stopped'.  I
 In case you (like me) have configured spotify to scrobble anything you play to lastfm then you can use this to show recently played tracks (played using spotify or anything else).
 
 For some unknown reason, lastfm requires an application id to read the recently played tracks for a given user.  To use the '/lastfm' route you will need to create a lastfm application with your lastfm account and set the LASTFM_API_KEY and LAST_FM_USER environment variables.
+
+## Future Plans
+
+* a menu would be nice
+* search by artist
+* search by album
+* less appalling user interface
