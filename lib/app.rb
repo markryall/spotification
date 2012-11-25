@@ -9,6 +9,8 @@ include Lastfm
 include Spotify
 include TrackQueue
 
+set :root, File.dirname(__FILE__)+'/..'
+
 get '/lastfm/:user' do |user|
   slim :index, locals: {tracks: recent_lastfm_tracks_for(user) }
 end

@@ -1,4 +1,4 @@
-$: << File.dirname(__FILE__)
+$: << File.dirname(__FILE__)+'/lib'
 
 require 'app'
 run Sinatra::Application
