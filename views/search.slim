@@ -13,3 +13,4 @@ form class="form-search" action="/tracks" method="post"
           h2 = track['name']
         p = track['album']['name']
         p = track['artists'].map{|a| a['name']}.join(',')
+        a href="#{track['href']}" listen
