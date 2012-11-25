@@ -13,6 +13,10 @@ get '/lastfm/:user' do |user|
   slim :index, locals: {tracks: recent_lastfm_tracks_for(user) }
 end
 
+get '/queue' do
+  slim :queue, locals: { queue: self }
+end
+
 get '/tracks' do
   slim :search, locals: {criteria: '', tracks: []}
 end
