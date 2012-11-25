@@ -22,5 +22,5 @@ post '/tracks' do
 end
 
 post '/track' do
-  puts params[:id]
+  puts params[:track]
 end

@@ -1,4 +1,8 @@
 $ ->
   $('.enqueue').click ->
     $.post '/track',
-      id: $(this).data('id')
+      track:
+        id: $(this).data('id'),
+        name: $(this).data('name'),
+        album: $(this).data('album'),
+        artists: $(this).data('album')
