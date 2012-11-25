@@ -1,11 +1,17 @@
-form.form-search action="/search" method="post"
+- content_for :js do
+  script src="/tracks.js" type="text/javascript"
+
+form.form-search action="/tracks" method="post"
   input.track-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
   button type="submit" class="btn btn-primary" Search
 
 - tracks.each do |track|
+  - id, name, album, artists = track['href'], track['name'], track['album']['name'], track['artists'].map{|a| a['name']}.join(',')
   div.hero-unit
     div.row
       div.span3
-        h2 = track['name']
-        p = track['album']['name']
-        p = track['artists'].map{|a| a['name']}.join(',')
+        h2 = name
+        p = album
+        p = artists
+        a.enqueue.btn.btn-primary data-id="#{id}" data-name="#{name}" data-album="#{album}" data-artists="#{artists}" href="#" queue
+        a.btn.btn-info href="#{id}" listen

@@ -18,13 +18,13 @@ get '/queue' do
 end
 
 get '/tracks' do
-  slim :search, locals: {criteria: '', tracks: []}
+  slim :tracks, locals: {criteria: '', tracks: []}
 end
 
 post '/tracks' do
   criteria = params[:criteria]
   results =  criteria
-  slim :search, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
+  slim :tracks, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
 end
 
 post '/track' do
