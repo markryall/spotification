@@ -9,6 +9,10 @@ include TrackQueue
 
 set :root, File.dirname(__FILE__)+'/..'
 
+get '/' do
+  slim :index
+end
+
 get '/queue' do
   slim :queue, locals: { queue: self }
 end
@@ -32,7 +36,7 @@ if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
 
   include Lastfm
 
-  get '/lastfm' do |user|
+  get '/lastfm' do
     slim :lastfm, locals: {tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER']) }
   end
 end

@@ -1,0 +1,9 @@
+- tracks.each do |track|
+  div.hero-unit
+    div.row
+      div.span3
+        img src="#{track['image'].find{|i| i['size'] == 'large'}['#text']}"
+      div.span3
+        h2 = track['name']
+        p = track['album']['#text']
+        p = track['artist']['#text']

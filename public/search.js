@@ -2,7 +2,7 @@
 
   $(function() {
     return $('.enqueue').click(function() {
-      return $.post('/track', {
+      $.post('/track', {
         track: {
           id: $(this).data('id'),
           name: $(this).data('name'),
@@ -10,6 +10,7 @@
           artists: $(this).data('album')
         }
       });
+      return false;
     });
   });
 

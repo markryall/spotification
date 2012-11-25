@@ -7,7 +7,11 @@ end
 
 module Lastfm
   def recent_lastfm_tracks_for user
-    response =  HTTParty.get "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&nowplaying=true&user=#{user}&api_key=#{ENV['LASTFM_API_KEY']}&format=json"
+    response = get_url "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&nowplaying=true&user=#{user}&api_key=#{ENV['LASTFM_API_KEY']}&format=json"
     response['recenttracks']['track']
+  end
+
+  def get_url url
+    HTTParty.get url.tap {|u| p u }
   end
 end
