@@ -1,7 +1,9 @@
 source :rubygems
 gem 'sinatra'
+gem 'sinatra-contrib'
 gem 'slim'
 gem 'httparty'
 gem 'growl'
 gem 'guard'
 gem 'guard-coffeescript'
+gem 'rb-fsevent'

@@ -1,3 +1,3 @@
-guard 'coffeescript', output: 'public/js' do
-  watch /^public/cs\/.*[.]coffee/
+guard 'coffeescript', output: 'public' do
+  watch /^public\/.*[.]coffee/
 end

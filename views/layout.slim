@@ -8,4 +8,6 @@ html
   body
     div.container
       == yield
+    script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"
     script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"
+    == yield_content :js
