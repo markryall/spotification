@@ -7,18 +7,12 @@ html
     link href="/style.css" media="screen" rel="stylesheet" type="text/css"
   body
     div.container
-      div.hero-unit
-        div.row
-          div.span3
-          div.span3
-            h2 track one
-            h3 artist one
-            h3 album one
-      div.hero-unit
-        div.row
-          div.span3
-          div.span3
-            h2 track two
-            h3 artist two
-            h3 album two
+      - tracks.each do |track|
+        div.hero-unit
+          div.row
+            div.span3
+              img src="#{track['image'].find{|i| i['size'] == 'large'}['#text']}"
+            div.span3
+              h2 = track['name']
+              h3 = track['artist']['name']
     script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"
