@@ -1,7 +1,12 @@
+- content_for :js do
+  script src="/queue.js" type="text/javascript"
+
 - each_track do |track|
   div.hero-unit
     div.row
-      div.span3
+      div.span8
         h2 = track['name']
         p = track['album']
         p = track['artists']
+      div.span2
+        a.btn.btn-danger.dequeue data-id="#{track[:index]}" href='#' remove

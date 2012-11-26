@@ -31,7 +31,8 @@ module TrackQueue
   def each_track
     in_queue_dir do
       Dir.glob('*').sort.each do |file|
-        yield YAML.load_file file
+        hash = {index: file}.merge YAML.load_file file
+        yield hash
       end
     end
   end

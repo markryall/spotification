@@ -17,6 +17,10 @@ get '/queue' do
   slim :queue, locals: { queue: self }
 end
 
+post '/dequeue' do
+  destroy params[:id]
+end
+
 get '/tracks' do
   slim :tracks, locals: {criteria: '', tracks: []}
 end
