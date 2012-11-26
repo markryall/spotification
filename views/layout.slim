@@ -6,6 +6,20 @@ html
     link href="/bootstrap/css/bootstrap-responsive.min.css" media="screen" rel="stylesheet" type="text/css"
     link href="/style.css" media="screen" rel="stylesheet" type="text/css"
   body
+    div.navbar.navbar-fixed-top
+      div.navbar-inner
+        div.container
+          a.brand href="/" queue
+          div.nav
+            ul.nav
+              li
+                a href="/tracks" tracks
+              li
+                a href="/albums" albums
+              - if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
+                li
+                  a href="/lastfm" lastfm
+
     div.container
       == yield
     script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"

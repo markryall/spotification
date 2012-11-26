@@ -10,10 +10,6 @@ include TrackQueue
 set :root, File.dirname(__FILE__)+'/..'
 
 get '/' do
-  slim :index
-end
-
-get '/queue' do
   slim :queue, locals: { queue: self }
 end
 
