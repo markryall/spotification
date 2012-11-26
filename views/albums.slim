@@ -1,5 +1,5 @@
 - content_for :js do
-  script src="/tracks.js" type="text/javascript"
+  script src="/albums.js" type="text/javascript"
 
 form.form-search action="/albums" method="post"
   input.track-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
@@ -12,5 +12,5 @@ form.form-search action="/albums" method="post"
       div.span3
         h2 = album
         p = artists
-        a.enqueue.btn.btn-primary data-id="#{id}" data-album="#{album}" data-artists="#{artists}" href="#" queue
+        a.enqueue.btn.btn-primary data-id="#{id}" href="#" queue
         a.btn.btn-info href="#{id}" listen

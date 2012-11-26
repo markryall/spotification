@@ -26,4 +26,8 @@ module Spotify
   def spotify_search entity, criteria
     HTTParty.get("http://ws.spotify.com/search/1/#{entity}.json?q=#{CGI.escape criteria}")["#{entity}s"]
   end
+
+  def spotify_lookup id, *extras
+    HTTParty.get("http://ws.spotify.com/lookup/1/.json?uri=#{id}&extras=#{extras.join ','}")
+  end
 end

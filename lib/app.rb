@@ -45,6 +45,16 @@ post '/track' do
   enqueue params[:track]
 end
 
+post '/album' do
+  album = spotify_lookup(params[:id], 'track')['album']
+  album['tracks'].each do |track|
+    enqueue 'id' => track['href'],
+      'name' => track['name'],
+      'album' => album['name'],
+      'artists' => track['artists'].map{|a| a['name']}.join(',')
+  end
+end
+
 if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
   require 'lastfm'
 
