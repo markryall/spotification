@@ -5,7 +5,6 @@ module SpotifyRemote
 
   def play id
     spotify_command "open location \"#{id}\""
-    spotify_command "play"
   end
 
   def spotify_command command
