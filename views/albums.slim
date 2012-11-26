@@ -1,0 +1,16 @@
+- content_for :js do
+  script src="/tracks.js" type="text/javascript"
+
+form.form-search action="/albums" method="post"
+  input.track-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
+  button type="submit" class="btn btn-primary" Search
+
+- albums.each do |album|
+  - id, album, artists = album['href'], album['name'], album['artists'].map{|a| a['name']}.join(',')
+  div.hero-unit
+    div.row
+      div.span3
+        h2 = album
+        p = artists
+        a.enqueue.btn.btn-primary data-id="#{id}" data-album="#{album}" data-artists="#{artists}" href="#" queue
+        a.btn.btn-info href="#{id}" listen

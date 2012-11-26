@@ -31,14 +31,14 @@ post '/tracks' do
   slim :tracks, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
 end
 
-get '/album' do
-  slim :albums, locals: {criteria: '', tracks: []}
+get '/albums' do
+  slim :albums, locals: {criteria: '', albums: []}
 end
 
-post '/tracks' do
+post '/albums' do
   criteria = params[:criteria]
   results =  criteria
-  slim :tracks, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
+  slim :albums, locals: {criteria: criteria, albums: spotify_albums_matching(criteria) }
 end
 
 post '/track' do

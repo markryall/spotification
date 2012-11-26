@@ -1,10 +1,13 @@
 div.row
   div.span4
-    a href="/queue" queue
+    a.btn.btn-large href="/queue" queue
 div.row
   div.span4
-    a href="/tracks" search tracks
+    a.btn.btn-large href="/tracks" tracks
+div.row
+  div.span4
+    a.btn.btn-large href="/albums" albums
 - if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
   div.row
     div.span4
-      a href="/lastfm" lastfm
+      a.btn.btn-large href="/lastfm" lastfm
