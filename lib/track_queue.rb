@@ -10,8 +10,7 @@ module TrackQueue
 
   def enqueue track
     in_queue_dir do
-      @sequence ||= 0
-      File.open("#{Time.now.to_i}-#{@sequence.to_s.rjust(8,'0')}.song", 'w') {|f| f.print track.to_yaml }
+      File.open(Time.now.to_i.to_s, 'w') {|f| f.print track.to_yaml }
     end
   end
 

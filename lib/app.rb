@@ -27,6 +27,16 @@ post '/tracks' do
   slim :tracks, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
 end
 
+get '/album' do
+  slim :albums, locals: {criteria: '', tracks: []}
+end
+
+post '/tracks' do
+  criteria = params[:criteria]
+  results =  criteria
+  slim :tracks, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
+end
+
 post '/track' do
   enqueue params[:track]
 end
