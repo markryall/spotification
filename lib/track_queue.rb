@@ -14,9 +14,13 @@ module TrackQueue
     end
   end
 
+  def destroy id
+    in_queue_dir { FileUtils.rm id }
+  end
+
   def dequeue
     in_queue_dir do
-      file = Dir.glob('*.song').sort.first
+      file = Dir.glob('*').sort.first
       return nil unless file
       hash = YAML.load_file file
       FileUtils.rm file
@@ -26,7 +30,7 @@ module TrackQueue
 
   def each_track
     in_queue_dir do
-      Dir.glob('*.song').sort.each do |file|
+      Dir.glob('*').sort.each do |file|
         yield YAML.load_file file
       end
     end
