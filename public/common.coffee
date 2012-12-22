@@ -12,3 +12,15 @@ $ ->
       (data) ->
         $('a.volume').text data.percentage
     false
+
+  $('.rewind').click ->
+    $.post '/player/rewind'
+    false
+
+  $('.playpause').click ->
+    $.post '/player/playpause'
+    false
+
+  $('.fastforward').click ->
+    $.post '/player/fastforward'
+    false

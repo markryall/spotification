@@ -3,11 +3,13 @@ require 'sinatra/content_for'
 require 'sinatra/json'
 require 'slim'
 require 'spotify'
+require 'spotify_remote'
 require 'track_queue'
 require 'json'
 
 include Spotify
 include TrackQueue
+include SpotifyRemote
 
 set :root, File.dirname(__FILE__)+'/..'
 
@@ -47,9 +49,11 @@ end
 post('/volume/up') { change_volume 5 }
 post('/volume/down') { change_volume -5 }
 
-post '/track' do
-  enqueue params[:track]
-end
+post('/player/rewind') { rewind }
+post('/player/playpause') { playpause }
+post('/player/fastforward') { fastforward }
+
+post('/track') { enqueue params[:track] }
 
 post '/album' do
   album = spotify_lookup(params[:id], 'track')['album']
