@@ -1,8 +1,10 @@
 require 'sinatra'
 require 'sinatra/content_for'
+require 'sinatra/json'
 require 'slim'
 require 'spotify'
 require 'track_queue'
+require 'json'
 
 include Spotify
 include TrackQueue
@@ -36,6 +38,14 @@ post '/albums' do
   results =  criteria
   slim :albums, locals: {criteria: criteria, albums: spotify_albums_matching(criteria) }
 end
+
+def change_volume inc
+  self.volume = self.volume + inc
+  json percentage: self.volume
+end
+
+post('/volume/up') { change_volume 5 }
+post('/volume/down') { change_volume -5 }
 
 post '/track' do
   enqueue params[:track]
