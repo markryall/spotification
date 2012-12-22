@@ -6,7 +6,7 @@ html
     link href="/bootstrap/css/bootstrap-responsive.min.css" media="screen" rel="stylesheet" type="text/css"
     link href="/style.css" media="screen" rel="stylesheet" type="text/css"
   body
-    div.navbar.navbar-fixed-top
+    div.navbar.navbar-fixed-top.navbar-inverse
       div.navbar-inner
         div.container
           a.brand href="/" queue
@@ -19,8 +19,17 @@ html
               - if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
                 li
                   a href="/lastfm" lastfm
+              li
+                a href="#"
+                  i class="icon-chevron-down"
+              li
+                a.volume href="#" = 50
+              li
+                a href="#"
+                  i class="icon-chevron-up"
 
     div.container
+      div.ruler
       == yield
     script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"
     script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"
