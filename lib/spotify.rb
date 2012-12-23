@@ -19,6 +19,26 @@ module Spotify
     end
   end
 
+  def spotify_artist_matching criteria
+    spotify_search 'artist', criteria
+  end
+
+  def spotify_artist id
+    artist = spotify_lookup(id, 'album')['artist']
+    albums = []
+    artist['albums'].each do |album|
+      if spotify_available? album['album']['availability']['territories']
+        albums << album['album']
+      end
+    end
+    artist['albums'] = albums
+    artist
+  end
+
+  def spotify_album id
+    spotify_lookup(id, 'track')['album']
+  end
+
   def spotify_available? territories
     !(territories.split & ['worldwide', ENV['SPOTIFY_TERRITORY']]).empty?
   end

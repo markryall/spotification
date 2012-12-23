@@ -56,7 +56,7 @@ post('/player/fastforward') { fastforward }
 post('/track') { enqueue params[:track] }
 
 post '/album' do
-  album = spotify_lookup(params[:id], 'track')['album']
+  album = spotify_album params[:id]
   album['tracks'].each do |track|
     enqueue 'id' => track['href'],
       'name' => track['name'],
