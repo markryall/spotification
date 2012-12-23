@@ -14,9 +14,17 @@ module Spotify
   end
 
   def spotify_albums_matching criteria
-    spotify_search('album', criteria).find_all do |album|
-      spotify_available? album['availability']['territories']
+    albums = []
+    spotify_search('album', criteria).each do |album|
+      if spotify_available? album['availability']['territories']
+        albums << {
+          'id' => album['href'].split(':').last,
+          'name' => album['name'],
+          'artists' => album['artists'].map{|a| a['name']}.join(',')
+        }
+      end
     end
+    albums
   end
 
   def spotify_artist_matching criteria
@@ -36,8 +44,8 @@ module Spotify
   end
 
   def spotify_album id
-    result = spotify_lookup id, 'track'
-    return nil unless result and result['album']
+    result = spotify_lookup "spotify:album:#{id}", 'track'
+    return {} unless result and result['album']
     album = {
       'name' => result['album']['name'],
       'tracks' => []
@@ -45,6 +53,7 @@ module Spotify
     result['album']['tracks'].each do |track|
       album['tracks'] << {
         'id' => track['href'],
+        'name' => track['name'],
         'album' => album['name'],
         'artists' => track['artists'].map{|a| a['name']}.join(',')
       }

@@ -62,8 +62,7 @@ post '/album' do
 end
 
 get '/tracks/:id' do |id|
-  album = spotify_album id
-  json album ? album['tracks'] : []
+  json spotify_album id
 end
 
 if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']

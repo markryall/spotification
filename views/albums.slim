@@ -6,7 +6,7 @@ form.form-search action="/albums" method="post"
   button type="submit" class="btn btn-primary" Search
 
 - albums.each do |album|
-  - id, album, artists = album['href'], album['name'], album['artists'].map{|a| a['name']}.join(',')
+  - id, album, artists = album['id'], album['name'], album['artists']
   div.hero-unit
     div.row
       div.span3
@@ -15,3 +15,4 @@ form.form-search action="/albums" method="post"
         a.enqueue.btn.btn-primary data-id="#{id}" href="#" queue
         a.btn.btn-info href="#{id}" listen
         a.tracks.btn data-id="#{id}" href="#" tracks
+        ul id="tracks-#{id}"
