@@ -5,8 +5,9 @@ $ ->
   {{/tracks}}
   """
   $('.enqueue').click ->
-    $.post '/album',
-      id: $(this).data('id'),
+    $.post '/album', id: $(this).data('id'), (data)->
+      $('.alert .message').text("#{data.tracks} tracks queued")
+      $('.alert').slideDown().removeClass('hidden')
     false
 
   $('.tracks').click ->

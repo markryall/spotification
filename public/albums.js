@@ -6,6 +6,9 @@
     $('.enqueue').click(function() {
       $.post('/album', {
         id: $(this).data('id')
+      }, function(data) {
+        $('.alert .message').text("" + data.tracks + " tracks queued");
+        return $('.alert').slideDown().removeClass('hidden');
       });
       return false;
     });
