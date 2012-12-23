@@ -65,7 +65,11 @@ post('/player/rewind') { rewind }
 post('/player/playpause') { playpause }
 post('/player/fastforward') { fastforward }
 
-post('/track') { enqueue params[:track] }
+post('/track') do
+  track = spotify_track params[:id]
+  enqueue track
+  json track
+end
 
 post '/album' do
   album = spotify_album params[:id]

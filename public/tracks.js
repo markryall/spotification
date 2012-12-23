@@ -1,14 +1,12 @@
 (function() {
 
   $(function() {
-    return $('.enqueue').click(function() {
+    return $('.enqueue').on('click', function() {
+      hideMessage();
       $.post('/track', {
-        track: {
-          id: $(this).data('id'),
-          name: $(this).data('name'),
-          album: $(this).data('album'),
-          artists: $(this).data('artists')
-        }
+        id: $(this).data('id')
+      }, function(data) {
+        return showMessage("Track added to queue");
       });
       return false;
     });

@@ -1,9 +1,6 @@
 $ ->
-  $('.enqueue').click ->
-    $.post '/track',
-      track:
-        id: $(this).data('id'),
-        name: $(this).data('name'),
-        album: $(this).data('album'),
-        artists: $(this).data('artists')
+  $('.enqueue').on 'click', ->
+    hideMessage()
+    $.post '/track', id: $(this).data('id'), (data)->
+      showMessage "Track added to queue"
     false
