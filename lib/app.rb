@@ -27,7 +27,6 @@ end
 
 post '/tracks' do
   criteria = params[:criteria]
-  results =  criteria
   slim :tracks, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
 end
 
@@ -37,8 +36,16 @@ end
 
 post '/albums' do
   criteria = params[:criteria]
-  results =  criteria
   slim :albums, locals: {criteria: criteria, albums: spotify_albums_matching(criteria) }
+end
+
+get '/artists' do
+  slim :artists, locals: {criteria: '', artists: []}
+end
+
+post '/artists' do
+  criteria = params[:criteria]
+  slim :artists, locals: {criteria: criteria, artists: spotify_artists_matching(criteria) }
 end
 
 def change_volume inc

@@ -36,8 +36,15 @@ module Spotify
     albums
   end
 
-  def spotify_artist_matching criteria
-    spotify_search 'artist', criteria
+  def spotify_artists_matching criteria
+    artists = []
+    spotify_search('artist', criteria).each do |artist|
+      artists << {
+        'id' => artist['href'],
+        'name' => artist['name']
+      }
+    end
+    artists
   end
 
   def spotify_artist id

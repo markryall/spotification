@@ -1,0 +1,12 @@
+- content_for :js do
+  script src="/artists.js" type="text/javascript"
+
+form.form-search action="/artists" method="post"
+  input.artist-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
+  button type="submit" class="btn btn-primary" Search
+
+- artists.each do |artist|
+  div.hero-unit
+    div.row
+      div.span3
+        h2 = artist['name']
