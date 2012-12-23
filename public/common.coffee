@@ -25,7 +25,9 @@ $ ->
     false
 
   $('.playpause').click ->
-    $.post '/player/playpause'
+    hideMessage()
+    $.post '/player/playpause', {}, (data) ->
+      showMessage "Player is now #{data.state}"
     false
 
   $('.fastforward').click ->

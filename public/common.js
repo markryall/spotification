@@ -31,7 +31,10 @@
       return false;
     });
     $('.playpause').click(function() {
-      $.post('/player/playpause');
+      hideMessage();
+      $.post('/player/playpause', {}, function(data) {
+        return showMessage("Player is now " + data.state);
+      });
       return false;
     });
     return $('.fastforward').click(function() {

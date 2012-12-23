@@ -62,8 +62,12 @@ post('/volume/up') { change_volume 5 }
 post('/volume/down') { change_volume -5 }
 
 post('/player/rewind') { rewind }
-post('/player/playpause') { playpause }
 post('/player/fastforward') { fastforward }
+
+post '/player/playpause' do
+  playpause
+  json state: player_state
+end
 
 post('/track') do
   track = spotify_track params[:id]
