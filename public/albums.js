@@ -23,9 +23,11 @@
     });
     $('.tracks').click(function() {
       var id;
+      hideMessage();
       id = $(this).data('id');
       $.get("/tracks/" + id, {}, function(data) {
         var list;
+        showMessage("" + data.tracks.length + " tracks retrieved");
         list = Mustache.to_html(template, data);
         $("#tracks-" + id).html(list);
         return $("#tracks-" + id + " .enqueue-track").click(enqueueTrackClickHandler);

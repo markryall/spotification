@@ -25,8 +25,10 @@ $ ->
     false
 
   $('.tracks').click ->
+    hideMessage()
     id = $(this).data('id')
     $.get "/tracks/#{id}", {}, (data) ->
+      showMessage "#{data.tracks.length} tracks retrieved"
       list = Mustache.to_html template, data
       $("#tracks-#{id}").html list
       $("#tracks-#{id} .enqueue-track").click enqueueTrackClickHandler
