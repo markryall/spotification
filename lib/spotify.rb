@@ -8,9 +8,18 @@ end
 
 module Spotify
   def spotify_tracks_matching criteria
-    spotify_search('track', criteria).find_all do |track|
-      spotify_available? track['album']['availability']['territories']
+    tracks = []
+    spotify_search('track', criteria).each do |track|
+      if spotify_available? track['album']['availability']['territories']
+        tracks << {
+          'id' => track['href'],
+          'name' => track['name'],
+          'album' => track['album']['name'],
+          'artists' => track['artists'].map{|a| a['name']}.join(',')
+        }
+      end
     end
+    tracks
   end
 
   def spotify_albums_matching criteria

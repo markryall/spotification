@@ -6,7 +6,7 @@ form.form-search action="/tracks" method="post"
   button type="submit" class="btn btn-primary" Search
 
 - tracks.each do |track|
-  - id, name, album, artists = track['href'], track['name'], track['album']['name'], track['artists'].map{|a| a['name']}.join(',')
+  - id, name, album, artists = track['id'], track['name'], track['album'], track['artists']
   div.hero-unit
     div.row
       div.span3
