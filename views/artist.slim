@@ -1,0 +1,14 @@
+- content_for :js do
+  script src="/albums.js" type="text/javascript"
+
+h1 = artist['name']
+
+- artist['albums'].each do |album|
+  - id, album = album['id'], album['name']
+  div.hero-unit
+    div.row
+      div.span3
+        h2 = album
+        a.enqueue.btn.btn-primary data-id="#{id}" href="#" queue
+        a.tracks.btn.btn-info data-id="#{id}" href="#" tracks
+        ul id="tracks-#{id}"

@@ -80,6 +80,11 @@ get '/tracks/:id' do |id|
   json spotify_album id
 end
 
+get '/artist/:id' do |id|
+  artist = spotify_artist id
+  slim :artist, locals: {artist: artist}
+end
+
 if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
   require 'lastfm'
 

@@ -40,7 +40,7 @@ module Spotify
     artists = []
     spotify_search('artist', criteria).each do |artist|
       artists << {
-        'id' => artist['href'],
+        'id' => artist['href'].split(':').last,
         'name' => artist['name']
       }
     end
@@ -48,11 +48,16 @@ module Spotify
   end
 
   def spotify_artist id
-    artist = spotify_lookup(id, 'album')['artist']
+    result = spotify_lookup "spotify:artist:#{id}", 'album'
+    return {} unless result and result['artist']
+    artist = result['artist']
     albums = []
     artist['albums'].each do |album|
       if spotify_available? album['album']['availability']['territories']
-        albums << album['album']
+        albums << {
+          'id' => album['album']['href'].split(':').last,
+          'name' => album['album']['name']
+        }
       end
     end
     artist['albums'] = albums
