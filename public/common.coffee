@@ -1,3 +1,10 @@
+window.showMessage = (message) ->
+  $('.message').text message
+  $('.message').removeClass 'hidden'
+
+window.hideMessage = ->
+  $('.message').addClass 'hidden'
+
 $ ->
   $('.volume_down').click ->
     $.post '/volume/down',

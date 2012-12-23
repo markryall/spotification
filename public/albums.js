@@ -4,11 +4,11 @@
     var template;
     template = "{{#tracks}}\n  <li>{{name}}</li>\n{{/tracks}}";
     $('.enqueue').click(function() {
+      hideMessage();
       $.post('/album', {
         id: $(this).data('id')
       }, function(data) {
-        $('.alert .message').text("" + data.tracks + " tracks queued");
-        return $('.alert').slideDown().removeClass('hidden');
+        return showMessage("" + data.tracks + " tracks queued");
       });
       return false;
     });

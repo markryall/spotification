@@ -1,5 +1,14 @@
 (function() {
 
+  window.showMessage = function(message) {
+    $('.message').text(message);
+    return $('.message').removeClass('hidden');
+  };
+
+  window.hideMessage = function() {
+    return $('.message').addClass('hidden');
+  };
+
   $(function() {
     $('.volume_down').click(function() {
       $.post('/volume/down', {
