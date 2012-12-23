@@ -36,7 +36,21 @@ module Spotify
   end
 
   def spotify_album id
-    spotify_lookup(id, 'track')['album']
+    result = spotify_lookup id, 'track'
+    return nil unless result and result['album']
+    album = {
+      'name' => result['album']['name'],
+      'tracks' => []
+    }
+    result['album']['tracks'].each do |track|
+      album['tracks'] << {
+        'id' => track['href'],
+        'album' => album['name'],
+        'artists' => track['artists'].map{|a| a['name']}.join(',')
+      }
+    end
+    yield album if block_given?
+    album
   end
 
   def spotify_available? territories

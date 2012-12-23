@@ -56,13 +56,14 @@ post('/player/fastforward') { fastforward }
 post('/track') { enqueue params[:track] }
 
 post '/album' do
-  album = spotify_album params[:id]
-  album['tracks'].each do |track|
-    enqueue 'id' => track['href'],
-      'name' => track['name'],
-      'album' => album['name'],
-      'artists' => track['artists'].map{|a| a['name']}.join(',')
+  spotify_album params[:id] do |album|
+    album['tracks'].each { |track| enqueue track }
   end
+end
+
+get '/tracks/:id' do |id|
+  album = spotify_album id
+  json album ? album['tracks'] : []
 end
 
 if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
