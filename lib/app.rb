@@ -56,9 +56,15 @@ post('/player/fastforward') { fastforward }
 post('/track') { enqueue params[:track] }
 
 post '/album' do
-  spotify_album params[:id] do |album|
-    album['tracks'].each { |track| enqueue track }
+  album = spotify_album params[:id]
+  tracks = 0
+  if album
+    album['tracks'].each do |track|
+      tracks += 1
+      enqueue track
+    end
   end
+  json tracks: tracks
 end
 
 get '/tracks/:id' do |id|

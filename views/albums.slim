@@ -13,6 +13,5 @@ form.form-search action="/albums" method="post"
         h2 = album
         p = artists
         a.enqueue.btn.btn-primary data-id="#{id}" href="#" queue
-        a.btn.btn-info href="#{id}" listen
-        a.tracks.btn data-id="#{id}" href="#" tracks
+        a.tracks.btn-info data-id="#{id}" href="#" tracks
         ul id="tracks-#{id}"

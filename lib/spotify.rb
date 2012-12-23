@@ -58,7 +58,6 @@ module Spotify
         'artists' => track['artists'].map{|a| a['name']}.join(',')
       }
     end
-    yield album if block_given?
     album
   end
 
