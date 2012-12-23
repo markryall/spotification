@@ -14,7 +14,8 @@ loop do
       track = dequeue
       if track
         puts "playing: #{track['name']} by #{track['artists']} from #{track['album']}"
-        play track['id']
+        id = track['id'].split(':').last
+        play "spotify:track:#{id}"
       end
     end
     sleep 5

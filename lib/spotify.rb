@@ -12,7 +12,7 @@ module Spotify
     spotify_search('track', criteria).each do |track|
       if spotify_available? track['album']['availability']['territories']
         tracks << {
-          'id' => track['href'],
+          'id' => track['href'].split(':').last,
           'name' => track['name'],
           'album' => track['album']['name'],
           'artists' => track['artists'].map{|a| a['name']}.join(',')
@@ -73,7 +73,7 @@ module Spotify
     }
     result['album']['tracks'].each do |track|
       album['tracks'] << {
-        'id' => track['href'],
+        'id' => track['href'].split(':').last,
         'name' => track['name'],
         'album' => album['name'],
         'artists' => track['artists'].map{|a| a['name']}.join(',')
