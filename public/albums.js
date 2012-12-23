@@ -2,7 +2,7 @@
 
   $(function() {
     var template;
-    template = "{{#tracks}}\n  <li>{{name}}</li>\n{{/tracks}}";
+    template = "<table class=\"table table-hover\">\n  <tbody>\n  {{#tracks}}\n    <tr>\n      <td>{{name}}</td>\n      <td><a data-id=\"{{id}}\" href=\"#\"><i class=\"icon-plus-sign\"></i></a></td>\n    </td>\n  {{/tracks}}\n  <tbody>\n</table>";
     $('.enqueue').click(function() {
       hideMessage();
       $.post('/album', {
@@ -18,7 +18,7 @@
       $.get("/tracks/" + id, {}, function(data) {
         var list;
         list = Mustache.to_html(template, data);
-        return $("#tracks-" + id).append(list);
+        return $("#tracks-" + id).html(list);
       });
       return false;
     });

@@ -1,8 +1,15 @@
 $ ->
   template = """
-  {{#tracks}}
-    <li>{{name}}</li>
-  {{/tracks}}
+  <table class="table table-hover">
+    <tbody>
+    {{#tracks}}
+      <tr>
+        <td>{{name}}</td>
+        <td><a data-id="{{id}}" href="#"><i class="icon-plus-sign"></i></a></td>
+      </td>
+    {{/tracks}}
+    <tbody>
+  </table>
   """
   $('.enqueue').click ->
     hideMessage()
@@ -14,5 +21,5 @@ $ ->
     id = $(this).data('id')
     $.get "/tracks/#{id}", {}, (data) ->
       list = Mustache.to_html template, data
-      $("#tracks-#{id}").append list
+      $("#tracks-#{id}").html list
     false

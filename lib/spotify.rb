@@ -85,6 +85,17 @@ module Spotify
     album
   end
 
+  def spotify_track id
+    result = spotify_lookup "spotify:track:#{id}"
+    return {} unless result and result['track']
+    {
+        'id' => id,
+        'name' => result['track']['name'],
+        'album' => result['track']['album']['name'],
+        'artists' => result['track']['artists'].map{|a| a['name']}.join(',')
+    }
+  end
+
   def spotify_available? territories
     !(territories.split & ['worldwide', ENV['SPOTIFY_TERRITORY']]).empty?
   end
