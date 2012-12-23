@@ -9,7 +9,8 @@ end
 module Spotify
   def spotify_tracks_matching criteria
     tracks = []
-    spotify_search('track', criteria).each do |track|
+    results, info = spotify_search 'track', criteria
+    results.each do |track|
       if spotify_available? track['album']['availability']['territories']
         tracks << {
           'id' => track['href'].split(':').last,
@@ -19,12 +20,13 @@ module Spotify
         }
       end
     end
-    tracks
+    return tracks, info
   end
 
   def spotify_albums_matching criteria
     albums = []
-    spotify_search('album', criteria).each do |album|
+    results, info = spotify_search 'album', criteria
+    results.each do |album|
       if spotify_available? album['availability']['territories']
         albums << {
           'id' => album['href'].split(':').last,
@@ -33,18 +35,19 @@ module Spotify
         }
       end
     end
-    albums
+    return albums, info
   end
 
   def spotify_artists_matching criteria
     artists = []
-    spotify_search('artist', criteria).each do |artist|
+    results, info = spotify_search 'artist', criteria
+    results.each do |artist|
       artists << {
         'id' => artist['href'].split(':').last,
         'name' => artist['name']
       }
     end
-    artists
+    return artists, info
   end
 
   def spotify_artist id
@@ -87,7 +90,8 @@ module Spotify
   end
 
   def spotify_search entity, criteria
-    HTTParty.get("http://ws.spotify.com/search/1/#{entity}.json?q=#{CGI.escape criteria}")["#{entity}s"]
+    result = HTTParty.get("http://ws.spotify.com/search/1/#{entity}.json?q=#{CGI.escape criteria}")
+    return result["#{entity}s"], result['info']
   end
 
   def spotify_lookup id, *extras

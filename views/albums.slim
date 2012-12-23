@@ -1,6 +1,9 @@
 - content_for :js do
   script src="/albums.js" type="text/javascript"
 
+- content_for :message do
+  = info ? "#{info['num_results']} results" : ''
+
 form.form-search action="/albums" method="post"
   input.track-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
   button type="submit" class="btn btn-primary" Search

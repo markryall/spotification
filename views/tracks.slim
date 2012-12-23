@@ -1,6 +1,9 @@
 - content_for :js do
   script src="/tracks.js" type="text/javascript"
 
+- content_for :message do
+  = info ? "#{info['num_results']} results" : ''
+
 form.form-search action="/tracks" method="post"
   input.track-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
   button type="submit" class="btn btn-primary" Search
@@ -14,4 +17,3 @@ form.form-search action="/tracks" method="post"
         p = album
         p = artists
         a.enqueue.btn.btn-primary data-id="#{id}" data-name="#{name}" data-album="#{album}" data-artists="#{artists}" href="#" queue
-        a.btn.btn-info href="#{id}" listen

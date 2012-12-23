@@ -24,30 +24,33 @@ post '/dequeue' do
 end
 
 get '/tracks' do
-  slim :tracks, locals: {criteria: '', tracks: []}
+  slim :tracks, locals: {criteria: '', tracks: [], info: nil}
 end
 
 post '/tracks' do
   criteria = params[:criteria]
-  slim :tracks, locals: {criteria: criteria, tracks: spotify_tracks_matching(criteria) }
+  tracks, info = spotify_tracks_matching criteria
+  slim :tracks, locals: {criteria: criteria, tracks: tracks, info: info }
 end
 
 get '/albums' do
-  slim :albums, locals: {criteria: '', albums: []}
+  slim :albums, locals: {criteria: '', albums: [], info: nil}
 end
 
 post '/albums' do
   criteria = params[:criteria]
-  slim :albums, locals: {criteria: criteria, albums: spotify_albums_matching(criteria) }
+  albums, info = spotify_albums_matching criteria
+  slim :albums, locals: {criteria: criteria, albums: albums, info: info }
 end
 
 get '/artists' do
-  slim :artists, locals: {criteria: '', artists: []}
+  slim :artists, locals: {criteria: '', artists: [], info: nil}
 end
 
 post '/artists' do
   criteria = params[:criteria]
-  slim :artists, locals: {criteria: criteria, artists: spotify_artists_matching(criteria) }
+  artists, info = spotify_artists_matching(criteria)
+  slim :artists, locals: {criteria: criteria, artists: artists, info: info }
 end
 
 def change_volume inc

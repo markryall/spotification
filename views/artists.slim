@@ -1,3 +1,6 @@
+- content_for :message do
+  = info ? "#{info['num_results']} results" : ''
+
 form.form-search action="/artists" method="post"
   input.artist-search.input-medium.search-query type="text" name="criteria" value="#{criteria}"
   button type="submit" class="btn btn-primary" Search
