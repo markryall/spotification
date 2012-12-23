@@ -14,7 +14,7 @@
       $.post('/volume/down', {
         id: $(this).data('level')
       }, function(data) {
-        return $('a.volume').text(data.percentage);
+        return $('.volume').text(data.percentage);
       });
       return false;
     });
@@ -22,7 +22,7 @@
       $.post('/volume/up', {
         id: $(this).data('level')
       }, function(data) {
-        return $('a.volume').text(data.percentage);
+        return $('.volume').text(data.percentage);
       });
       return false;
     });
