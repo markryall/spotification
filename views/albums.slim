@@ -15,6 +15,6 @@ form.form-search action="/albums" method="post"
       div.span3
         h2 = album
         p = artists
-        a.enqueue.btn.btn-primary data-id="#{id}" href="#" queue
+        a.enqueue-album.btn.btn-primary data-id="#{id}" href="#" queue
         a.tracks.btn.btn-info data-id="#{id}" href="#" tracks
         div id="tracks-#{id}"
