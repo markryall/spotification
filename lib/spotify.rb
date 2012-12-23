@@ -88,12 +88,4 @@ module Spotify
   def spotify_lookup id, *extras
     HTTParty.get("http://ws.spotify.com/lookup/1/.json?uri=#{id}&extras=#{extras.join ','}")
   end
-
-  def volume
-    `osascript -e 'output volume of (get volume settings)'`.chomp.to_i
-  end
-
-  def volume= value
-    `osascript -e 'set volume output volume #{value}'`
-  end
 end

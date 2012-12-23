@@ -6,10 +6,12 @@ require 'spotify'
 require 'spotify_remote'
 require 'track_queue'
 require 'json'
+require 'volume'
 
 include Spotify
 include TrackQueue
 include SpotifyRemote
+include Volume
 
 set :root, File.dirname(__FILE__)+'/..'
 
