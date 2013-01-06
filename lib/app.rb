@@ -76,7 +76,7 @@ post('/track') do
 end
 
 post '/album' do
-  album = spotify_album params[:id]
+  album = album_info params[:id]
   tracks = 0
   if album
     album['tracks'].each do |track|
@@ -88,7 +88,7 @@ post '/album' do
 end
 
 get '/tracks/:id' do |id|
-  json spotify_album id
+  json album_info id
 end
 
 get '/artist/:id' do |id|

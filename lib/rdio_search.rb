@@ -18,6 +18,25 @@ module RdioSearch
     return albums, {'num_results' => result['result']['number_results']}
   end
 
+  def album_info id
+    result = rdio.call 'get', 'keys' => id, 'extras' => 'tracks'
+    album_result = result['result'][id]
+    album = {
+      'id' => id,
+      'name' => album_result['name'],
+      'artist' => album_result['artist']
+    }
+    album['tracks'] = album_result['tracks'].map do |track|
+      {
+        'id' => track['key'],
+        'name' => track['name'],
+        'album' => album_result['name'],
+        'artists' => album_result['artist']
+      }
+    end
+    album
+  end
+
   def artists_matching criteria
     result = rdio.call 'search', 'query' => criteria, 'types' => 'artist'
     artists = result['result']['results'].map do |artist|
@@ -34,7 +53,7 @@ module RdioSearch
     artist_result = result['result'][id]
     artist = {
       'id' => id,
-      'name' => result['result'][id]['name']
+      'name' => artist_result['name']
     }
     result = rdio.call 'getAlbumsForArtist', 'artist' => id
     artist['albums'] = result['result'].map do |album|
