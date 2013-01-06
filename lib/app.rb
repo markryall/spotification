@@ -70,7 +70,7 @@ post '/player/playpause' do
 end
 
 post('/track') do
-  track = spotify_track params[:id]
+  track = track_info params[:id]
   enqueue track
   json track
 end

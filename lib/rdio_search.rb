@@ -18,4 +18,17 @@ module RdioSearch
     end
     return tracks, {'num_results' => result['result']['number_results']}
   end
+
+  def track_info id
+    result = rdio.call 'get', 'keys' => id
+    track = result['result'][id]
+    {
+        'id' => id,
+        'name' => track['name'],
+        'album' => track['album'],
+        'artists' => track['artist'],
+        'duration' => track['duration'],
+        'icon' => track['icon']
+    }
+  end
 end

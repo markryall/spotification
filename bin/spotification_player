@@ -3,19 +3,18 @@
 $: << File.dirname(__FILE__)+'/../lib'
 
 require 'track_queue'
-require 'spotify_remote'
+require 'rdio_controller'
 
 include TrackQueue
-include SpotifyRemote
+include RdioController
 
 loop do
   begin
-    if player_state == 'stopped'
+    if player_state == 'paused'
       track = dequeue
       if track
         puts "playing: #{track['name']} by #{track['artists']} from #{track['album']}"
-        id = track['id'].split(':').last
-        play "spotify:track:#{id}"
+        play track['id']
       end
     end
     sleep 5
