@@ -4,9 +4,12 @@
 - each_track do |track|
   div.hero-unit
     div.row
-      div.span8
+      div.span3
+        img src="#{track['icon']}"
+      div.span5
         h2 = track['name']
         p = track['album']
         p = track['artists']
+        p = track['duration']
       div.span2
         a.btn.btn-danger.dequeue data-id="#{track[:index]}" href='#' remove
