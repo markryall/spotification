@@ -92,7 +92,7 @@ get '/tracks/:id' do |id|
 end
 
 get '/artist/:id' do |id|
-  artist = spotify_artist id
+  artist = artist_info id
   slim :artist, locals: {artist: artist}
 end
 

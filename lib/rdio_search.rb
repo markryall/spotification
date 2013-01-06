@@ -29,14 +29,31 @@ module RdioSearch
     return artists, {'num_results' => result['result']['number_results']}
   end
 
+  def artist_info id
+    result = rdio.call 'get', 'keys' => id
+    artist_result = result['result'][id]
+    artist = {
+      'id' => id,
+      'name' => result['result'][id]['name']
+    }
+    result = rdio.call 'getAlbumsForArtist', 'artist' => id
+    artist['albums'] = result['result'].map do |album|
+      {
+        'id' => album['key'],
+        'name' => album['name']
+      }
+    end
+    artist
+  end
+
   def tracks_matching criteria
     result = rdio.call 'search', 'query' => criteria, 'types' => 'track'
     tracks = result['result']['results'].map do |track|
       {
-          'id' => track['key'],
-          'name' => track['name'],
-          'album' => track['album'],
-          'artists' => track['artist']
+        'id' => track['key'],
+        'name' => track['name'],
+        'album' => track['album'],
+        'artists' => track['artist']
       }
     end
     return tracks, {'num_results' => result['result']['number_results']}
