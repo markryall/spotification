@@ -39,7 +39,7 @@ end
 
 post '/albums' do
   criteria = params[:criteria]
-  albums, info = spotify_albums_matching criteria
+  albums, info = albums_matching criteria
   slim :albums, locals: {criteria: criteria, albums: albums, info: info }
 end
 
@@ -49,7 +49,7 @@ end
 
 post '/artists' do
   criteria = params[:criteria]
-  artists, info = spotify_artists_matching(criteria)
+  artists, info = artists_matching(criteria)
   slim :artists, locals: {criteria: criteria, artists: artists, info: info }
 end
 
