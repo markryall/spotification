@@ -12,7 +12,7 @@ h1 = artist['name']
         h2 = album['name']
         p = album['artists']
         p = album['date']
-        p = "#{album['count']} tracks"
+        p = "#{album['count']} tracks (#{album['duration']})"
         a.enqueue-album.btn.btn-primary data-id="#{album['id']}" href="#" queue
         a.tracks.btn.btn-info data-id="#{album['id']}" href="#" tracks
         div id="tracks-#{album['id']}"

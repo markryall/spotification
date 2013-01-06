@@ -9,11 +9,13 @@ form.form-search action="/tracks" method="post"
   button type="submit" class="btn btn-primary" Search
 
 - tracks.each do |track|
-  - id, name, album, artists = track['id'], track['name'], track['album'], track['artists']
   div.hero-unit
     div.row
       div.span3
-        h2 = name
-        p = album
-        p = artists
-        a.enqueue-track.btn.btn-primary data-id="#{id}" href="#" queue
+        img src="#{track['icon']}"
+      div.span3
+        h2 = track['name']
+        p = track['album']
+        p = track['artists']
+        p = track['duration']
+        a.enqueue-track.btn.btn-primary data-id="#{track['id']}" href="#" queue

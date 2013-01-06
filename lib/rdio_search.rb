@@ -25,6 +25,11 @@ module RdioSearch
     }
   end
 
+  def to_duration hash
+    duration = hash['duration'].to_i
+    "%02d:%02d" % [duration/60,duration%60]
+  end
+
   def to_album hash
     {
       'id'      => hash['key'],
@@ -32,17 +37,19 @@ module RdioSearch
       'artists' => hash['artist'],
       'icon'    => hash['icon'],
       'date'    => hash['releaseDate'],
-      'count'   => hash['trackKeys'].count
+      'count'   => hash['trackKeys'].count,
+      'duration' => to_duration(hash)
     }
   end
 
   def to_track hash
+    duration = hash['duration'].to_i
     {
       'id'       => hash['key'],
       'name'     => hash['name'],
       'album'    => hash['album'],
       'artists'  => hash['artist'],
-      'duration' => hash['duration'],
+      'duration' => to_duration(hash),
       'icon'     => hash['icon']
     }
   end

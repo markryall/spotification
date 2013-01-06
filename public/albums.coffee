@@ -4,7 +4,7 @@ $ ->
     <tbody>
     {{#tracks}}
       <tr>
-        <td>{{name}}</td>
+        <td>{{name}} {{duration}}</td>
         <td><a class="enqueue-track" data-id="{{id}}" href="#"><i class="icon-plus-sign"></i></a></td>
       </td>
     {{/tracks}}
