@@ -12,8 +12,12 @@ form.form-search action="/albums" method="post"
   div.hero-unit
     div.row
       div.span3
+        img src="#{album['icon']}"
+      div.span3
         h2 = album['name']
         p = album['artists']
+        p = album['date']
+        p = "#{album['count']} tracks"
         a.enqueue-album.btn.btn-primary data-id="#{album['id']}" href="#" queue
         a.tracks.btn.btn-info data-id="#{album['id']}" href="#" tracks
         div id="tracks-#{album['id']}"

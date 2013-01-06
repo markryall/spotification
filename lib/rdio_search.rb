@@ -6,11 +6,33 @@ module RdioSearch
       [ENV['RDIO_CLIENT_KEY'], ENV['RDIO_CLIENT_SECRET']]
   end
 
+  def rdio_search criteria, type
+    result = rdio.call 'search', 'query' => criteria, 'types' => type
+    result['result']
+  end
+
+  def rdio_get id, extras=nil
+    params = { 'keys' => id }
+    params['extras'] = extras if extras
+    result = rdio.call 'get', params
+    result['result'][id]
+  end
+
+  def to_artist hash
+    {
+      'id'   => hash['key'],
+      'name' => hash['name']
+    }
+  end
+
   def to_album hash
     {
       'id'      => hash['key'],
       'name'    => hash['name'],
-      'artists' => hash['artist']
+      'artists' => hash['artist'],
+      'icon'    => hash['icon'],
+      'date'    => hash['releaseDate'],
+      'count'   => hash['trackKeys'].count
     }
   end
 
@@ -23,25 +45,6 @@ module RdioSearch
       'duration' => hash['duration'],
       'icon'     => hash['icon']
     }
-  end
-
-  def to_artist hash
-    {
-      'id'   => hash['key'],
-      'name' => hash['name']
-    }
-  end
-
-  def rdio_search criteria, type
-    result = rdio.call 'search', 'query' => criteria, 'types' => type
-    result['result']
-  end
-
-  def rdio_get id, extras=nil
-    params = { 'keys' => id }
-    params['extras'] = extras if extras
-    result = rdio.call 'get', params
-    result['result'][id]
   end
 
   def artists_matching criteria
