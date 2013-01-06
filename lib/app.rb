@@ -2,15 +2,15 @@ require 'sinatra'
 require 'sinatra/content_for'
 require 'sinatra/json'
 require 'slim'
-require 'spotify'
-require 'spotify_remote'
+require 'rdio_controller'
+require 'rdio_search'
 require 'track_queue'
 require 'json'
 require 'volume'
 
-include Spotify
+include RdioController
+include RdioSearch
 include TrackQueue
-include SpotifyRemote
 include Volume
 
 set :root, File.dirname(__FILE__)+'/..'
@@ -29,7 +29,7 @@ end
 
 post '/tracks' do
   criteria = params[:criteria]
-  tracks, info = spotify_tracks_matching criteria
+  tracks, info = tracks_matching criteria
   slim :tracks, locals: {criteria: criteria, tracks: tracks, info: info }
 end
 
