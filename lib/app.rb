@@ -49,7 +49,7 @@ end
 
 post '/artists' do
   criteria = params[:criteria]
-  artists, info = artists_matching(criteria)
+  artists, info = artists_matching criteria
   slim :artists, locals: {criteria: criteria, artists: artists, info: info }
 end
 

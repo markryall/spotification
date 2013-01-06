@@ -16,10 +16,19 @@ module RdioSearch
 
   def to_track hash
     {
-      'id'      => hash['key'],
-      'name'    => hash['name'],
-      'album'   => hash['album'],
-      'artists' => hash['artist']
+      'id'       => hash['key'],
+      'name'     => hash['name'],
+      'album'    => hash['album'],
+      'artists'  => hash['artist'],
+      'duration' => hash['duration'],
+      'icon'     => hash['icon']
+    }
+  end
+
+  def to_artist hash
+    {
+      'id'   => hash['key'],
+      'name' => hash['name']
     }
   end
 
@@ -29,14 +38,36 @@ module RdioSearch
   end
 
   def rdio_get id, extras=nil
-    result = rdio.call 'get', 'keys' => id, 'extras' => extras
+    params = { 'keys' => id }
+    params['extras'] = extras if extras
+    result = rdio.call 'get', params
     result['result'][id]
+  end
+
+  def artists_matching criteria
+    result = rdio_search criteria, 'artist'
+    artists = result['results'].map { |hash| to_artist hash }
+    return artists, {'num_results' => result['number_results']}
   end
 
   def albums_matching criteria
     result = rdio_search criteria, 'album'
-    albums = result['results'].map { |album| to_album album }
+    albums = result['results'].map { |hash| to_album hash }
     return albums, {'num_results' => result['number_results']}
+  end
+
+  def tracks_matching criteria
+    result = rdio_search criteria, 'track'
+    tracks = result['results'].map { |hash| to_track hash }
+    return tracks, {'num_results' => result['number_results']}
+  end
+
+  def artist_info id
+    artist_result = id
+    artist = to_artist artist_result
+    result = rdio.call 'getAlbumsForArtist', 'artist' => id.to_s
+    artist['albums'] = result['result'].map { |hash| to_album hash }
+    artist
   end
 
   def album_info id
@@ -46,57 +77,7 @@ module RdioSearch
     album
   end
 
-  def artists_matching criteria
-    result = rdio.call 'search', 'query' => criteria, 'types' => 'artist'
-    artists = result['result']['results'].map do |artist|
-      {
-        'id' => artist['key'],
-        'name' => artist['name']
-      }
-    end
-    return artists, {'num_results' => result['result']['number_results']}
-  end
-
-  def artist_info id
-    result = rdio.call 'get', 'keys' => id
-    artist_result = result['result'][id]
-    artist = {
-      'id' => id,
-      'name' => artist_result['name']
-    }
-    result = rdio.call 'getAlbumsForArtist', 'artist' => id
-    artist['albums'] = result['result'].map do |album|
-      {
-        'id' => album['key'],
-        'name' => album['name']
-      }
-    end
-    artist
-  end
-
-  def tracks_matching criteria
-    result = rdio.call 'search', 'query' => criteria, 'types' => 'track'
-    tracks = result['result']['results'].map do |track|
-      {
-        'id' => track['key'],
-        'name' => track['name'],
-        'album' => track['album'],
-        'artists' => track['artist']
-      }
-    end
-    return tracks, {'num_results' => result['result']['number_results']}
-  end
-
   def track_info id
-    result = rdio.call 'get', 'keys' => id
-    track = result['result'][id]
-    {
-        'id' => id,
-        'name' => track['name'],
-        'album' => track['album'],
-        'artists' => track['artist'],
-        'duration' => track['duration'],
-        'icon' => track['icon']
-    }
+    to_track rdio_get id
   end
 end
