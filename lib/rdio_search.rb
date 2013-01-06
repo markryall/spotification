@@ -1,5 +1,4 @@
 require 'rdio'
-require 'ostruct'
 
 module RdioSearch
   def rdio
@@ -8,27 +7,41 @@ module RdioSearch
   end
 
   def to_album hash
-    OpenStruct.new id: hash['key'],
-      name: hash['name'],
-      artists: hash['artist']
+    {
+      'id'      => hash['key'],
+      'name'    => hash['name'],
+      'artists' => hash['artist']
+    }
   end
 
   def to_track hash
-    OpenStruct.new id: hash['key'],
-      name: hash['name'],
-      album: hash['album'],
-      artists: hash['artist']
+    {
+      'id'      => hash['key'],
+      'name'    => hash['name'],
+      'album'   => hash['album'],
+      'artists' => hash['artist']
+    }
+  end
+
+  def rdio_search criteria, type
+    result = rdio.call 'search', 'query' => criteria, 'types' => type
+    result['result']
+  end
+
+  def rdio_get id, extras=nil
+    result = rdio.call 'get', 'keys' => id, 'extras' => extras
+    result['result'][id]
   end
 
   def albums_matching criteria
-    result = rdio.call 'search', 'query' => criteria, 'types' => 'album'
-    albums = result['result']['results'].map { |album| to_album album }
-    return albums, {'num_results' => result['result']['number_results']}
+    result = rdio_search criteria, 'album'
+    albums = result['results'].map { |album| to_album album }
+    return albums, {'num_results' => result['number_results']}
   end
 
   def album_info id
-    result = rdio.call 'get', 'keys' => id, 'extras' => 'tracks'
-    album_result = to_album result['result'][id]
+    album_result = rdio_get id, 'tracks'
+    album = to_album album_result
     album['tracks'] = album_result['tracks'].map { |track| to_track track }
     album
   end
