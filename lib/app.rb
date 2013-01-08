@@ -19,6 +19,10 @@ get '/' do
   slim :queue, locals: { queue: self }
 end
 
+get '/mobile' do
+  slim :mobile, layout: false
+end
+
 post '/dequeue' do
   destroy params[:id]
 end
