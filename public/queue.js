@@ -4,7 +4,7 @@
     return $('.dequeue').click(function() {
       var remove;
       remove = $(this).parent().parent().parent();
-      $.post('/dequeue', {
+      $.post('/api/dequeue', {
         id: $(this).data('id'),
         success: function() {
           return remove.slideUp();

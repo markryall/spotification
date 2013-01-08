@@ -31,7 +31,7 @@ get '/mobile' do
   slim :mobile, layout: false
 end
 
-post '/dequeue' do
+post '/api/dequeue' do
   destroy params[:id]
 end
 
