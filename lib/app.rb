@@ -21,6 +21,12 @@ get '/' do
   slim :queue, locals: { queue: self }
 end
 
+get '/api/queue' do
+  tracks = []
+  each_track { |track| tracks << track }
+  json tracks: tracks
+end
+
 get '/mobile' do
   slim :mobile, layout: false
 end
