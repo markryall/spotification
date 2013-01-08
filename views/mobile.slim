@@ -7,8 +7,32 @@ html
     script src="http://code.jquery.com/jquery-1.8.2.min.js"
     script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"
   body
-    div data-role="page"
+    div id="main" data-role="page"
       div data-role="header"
         h1 Spotification
       div data-role="content"
-        p Hello World
+        ul data-role="listview" data-inset="true"
+          li
+            a href="#controls" controls
+          li
+            a href="#queue" queue
+          li
+            a href="#search" search
+
+    div id="controls" data-role="page"
+      div data-role="header"
+        h1 Controls
+      div data-role="content"
+        p this will contain volume and player controls
+
+    div id="queue" data-role="page"
+      div data-role="header"
+        h1 Queue
+      div data-role="content"
+        p this will contain current queue content
+
+    div id="search" data-role="page"
+      div data-role="header"
+        h1 Search
+      div data-role="content"
+        p this will allow artist/album/track searches to be performed
