@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/content_for'
 require 'sinatra/json'
+require 'sinatra/partial'
 require 'slim'
 require 'rdio_controller'
 require 'rdio_search'
@@ -14,6 +15,7 @@ include TrackQueue
 include Volume
 
 set :root, File.dirname(__FILE__)+'/..'
+set :partial_template_engine, :slim
 
 get '/' do
   slim :queue, locals: { queue: self }
