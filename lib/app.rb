@@ -64,6 +64,11 @@ def change_volume inc
   json percentage: self.volume
 end
 
+post('/volume') do
+  self.volume = params[:percentage].to_i
+  json percentage: self.volume
+end
+
 post('/volume/up') { change_volume 5 }
 post('/volume/down') { change_volume -5 }
 
