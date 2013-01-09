@@ -23,7 +23,7 @@ $ ->
       (data) ->
         content = Mustache.to_html template, data
         $('#tracks .tracks-content').html content
-        $('#tracks-list').listview()
         $.mobile.loading 'hide'
         $.mobile.changePage '#tracks'
+        $('#tracks-list').listview()
     false

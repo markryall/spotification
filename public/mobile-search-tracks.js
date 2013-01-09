@@ -11,9 +11,9 @@
         var content;
         content = Mustache.to_html(template, data);
         $('#tracks .tracks-content').html(content);
-        $('#tracks-list').listview();
         $.mobile.loading('hide');
-        return $.mobile.changePage('#tracks');
+        $.mobile.changePage('#tracks');
+        return $('#tracks-list').listview();
       });
       return false;
     });
