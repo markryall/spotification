@@ -92,7 +92,7 @@ post '/player/playpause' do
   json state: player_state
 end
 
-post('/track') do
+post('/api/enqueue') do
   track = track_info params[:id]
   enqueue track
   json track
