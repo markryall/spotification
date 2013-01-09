@@ -77,6 +77,12 @@ post '/artists' do
   slim :artists, locals: {criteria: criteria, artists: artists, info: info }
 end
 
+get '/api/search/artists' do
+  criteria = params[:criteria]
+  artists, info = artists_matching criteria
+  json artists: artists, info: info
+end
+
 def change_volume inc
   self.volume = self.volume + inc
   json percentage: self.volume
