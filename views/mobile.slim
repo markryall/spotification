@@ -13,7 +13,7 @@ html
     == partial :mobile_controls
     == partial :mobile_queue
     - %w{track album artist}.each do |by|
-     == partial :mobile_search, locals: { by: by }
-    == partial :mobile_tracks
+      == partial :mobile_search, locals: { by: by }
     script src="mobile-queue.js"
-    script src="mobile-search-tracks.js"
+    - %w{track album artist}.each do |by|
+      script src="mobile-search-#{by}s.js"
