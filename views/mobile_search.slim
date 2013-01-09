@@ -1,9 +1,8 @@
-div id="search" data-role="page" data-add-back-btn="true"
+div id="search-#{by}s" data-role="page" data-add-back-btn="true"
   div data-role="header"
-    h1 Search
+    h1 Search by #{by}
   div data-role="content"
-    form id="search-tracks-form"
-      label for="search-tracks" Enter track criteria:
-      input type="search" name="search-tracks" id="search-tracks" value=""
+    form id="search-#{by}s-form"
+      label for="search-#{by}s-criteria" Enter #{by} criteria:
+      input type="search" name="search-#{by}s-criteria" id="search-#{by}s-criteria" value=""
       input type="submit" value="Search"
-    div id="search-tracks-results"

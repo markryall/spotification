@@ -16,7 +16,7 @@
     return $('#search-tracks-form').submit(function() {
       $.mobile.loading('show');
       $.get('/api/search/tracks', {
-        criteria: $('#search-tracks').val()
+        criteria: $('#search-tracks-criteria').val()
       }, function(data) {
         var content;
         content = Mustache.to_html(template, data);

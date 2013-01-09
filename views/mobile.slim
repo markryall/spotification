@@ -12,7 +12,8 @@ html
     == partial :mobile_main
     == partial :mobile_controls
     == partial :mobile_queue
-    == partial :mobile_search
+    - %w{track album artist}.each do |by|
+     == partial :mobile_search, locals: { by: by }
     == partial :mobile_tracks
     script src="mobile-queue.js"
     script src="mobile-search-tracks.js"

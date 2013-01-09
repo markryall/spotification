@@ -7,5 +7,6 @@ div id="main" data-role="page"
         a href="#controls" controls
       li
         a href="#queue" queue
-      li
-        a href="#search" search
+      - %w{track album artist}.each do |by|
+        li
+          a href="#search-#{by}s" search for #{by}

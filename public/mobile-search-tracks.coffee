@@ -26,7 +26,7 @@ $ ->
   $('#search-tracks-form').submit ->
     $.mobile.loading 'show'
     $.get '/api/search/tracks',
-      criteria: $('#search-tracks').val(),
+      criteria: $('#search-tracks-criteria').val(),
       (data) ->
         content = Mustache.to_html template, data
         $('#tracks .tracks-content').html content
