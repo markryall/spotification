@@ -61,6 +61,12 @@ post '/albums' do
   slim :albums, locals: {criteria: criteria, albums: albums, info: info }
 end
 
+get '/api/search/albums' do
+  criteria = params[:criteria]
+  albums, info = albums_matching criteria
+  json albums: albums, info: info
+end
+
 get '/artists' do
   slim :artists, locals: {criteria: '', artists: [], info: nil}
 end
