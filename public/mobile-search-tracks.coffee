@@ -18,7 +18,7 @@ $ ->
 
   queue_track = ->
     remove = $(this).parent()
-    $.post '/api/enqueue',
+    $.post '/api/enqueue/track',
       id: $(this).data('track-id'),
       success: ->
         remove.slideUp()

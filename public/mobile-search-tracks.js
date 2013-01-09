@@ -6,7 +6,7 @@
     queue_track = function() {
       var remove;
       remove = $(this).parent();
-      return $.post('/api/enqueue', {
+      return $.post('/api/enqueue/track', {
         id: $(this).data('track-id'),
         success: function() {
           return remove.slideUp();

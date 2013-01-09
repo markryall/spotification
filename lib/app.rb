@@ -104,13 +104,13 @@ post '/player/playpause' do
   json state: player_state
 end
 
-post('/api/enqueue') do
+post('/api/enqueue/track') do
   track = track_info params[:id]
   enqueue track
   json track
 end
 
-post '/album' do
+post '/api/enqueue/album' do
   album = album_info params[:id]
   tracks = 0
   if album
