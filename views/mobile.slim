@@ -10,7 +10,6 @@ html
     script src="mobile.js"
   body
     == partial :mobile_main
-    == partial :mobile_controls
     == partial :mobile_queue
     - %w{track album artist}.each do |by|
       == partial :mobile_search, locals: { by: by }

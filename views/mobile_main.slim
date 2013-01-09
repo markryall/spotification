@@ -4,9 +4,15 @@ div id="main" data-role="page"
   div data-role="content"
     ul data-role="listview" data-inset="true"
       li
-        a href="#controls" controls
-      li
         a href="#queue" queue
       - %w{track album artist}.each do |by|
         li
           a href="#search-#{by}s" search for #{by}
+
+    label for="volume-slider" Volume:
+    input name="volume-slider" id="volume-slider" value="60" min="0" max="100"
+
+    div data-role="controlgroup" data-type="horizontal"
+      a href="#" data-role="button" data-icon="arrow-l" data-iconpos="notext"
+      a href="#" data-role="button" data-icon="delete" data-iconpos="notext"
+      a href="#" data-role="button" data-icon="arrow-r" data-iconpos="notext"
