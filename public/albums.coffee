@@ -20,7 +20,7 @@ $ ->
 
   $('.enqueue-album').click ->
     hideMessage()
-    $.post '/album', id: $(this).data('id'), (data)->
+    $.post '/api/enqueue/album', id: $(this).data('id'), (data)->
       showMessage "#{data.tracks} tracks queued"
     false
 

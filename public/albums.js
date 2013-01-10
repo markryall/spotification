@@ -14,7 +14,7 @@
     };
     $('.enqueue-album').click(function() {
       hideMessage();
-      $.post('/album', {
+      $.post('/api/enqueue/album', {
         id: $(this).data('id')
       }, function(data) {
         return showMessage("" + data.tracks + " tracks queued");
