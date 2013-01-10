@@ -3,10 +3,16 @@
 $: << File.dirname(__FILE__)+'/../lib'
 
 require 'track_queue'
-require 'rdio_controller'
 
 include TrackQueue
-include RdioController
+
+if ENV['SPOTIFICATION_MODE'] == 'rdio'
+  require 'rdio_controller'
+  include RdioController
+else
+  require 'spotify_controller'
+  include SpotifyController
+end
 
 loop do
   begin

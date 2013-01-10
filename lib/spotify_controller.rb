@@ -4,7 +4,7 @@ module SpotifyController
   end
 
   def play id
-    spotify_command "open location \"#{id}\""
+    spotify_command "open location \"spotify:track:#{id}\""
   end
 
   def playpause
