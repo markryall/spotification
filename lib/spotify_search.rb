@@ -6,7 +6,7 @@ unless ENV['SPOTIFY_TERRITORY']
   exit 1
 end
 
-module Spotify
+module SpotifySearch
   def spotify_tracks_matching criteria
     tracks = []
     results, info = spotify_search 'track', criteria

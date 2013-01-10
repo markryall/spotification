@@ -1,4 +1,4 @@
-module SpotifyRemote
+module SpotifyController
   def player_state
     spotify_command "player state"
   end

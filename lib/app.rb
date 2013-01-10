@@ -3,16 +3,24 @@ require 'sinatra/content_for'
 require 'sinatra/json'
 require 'sinatra/partial'
 require 'slim'
-require 'rdio_controller'
-require 'rdio_search'
 require 'track_queue'
 require 'json'
 require 'volume'
 
-include RdioController
-include RdioSearch
 include TrackQueue
 include Volume
+
+if ENV['SPOTIFICATION_MODE'] == 'rdio'
+  require 'rdio_controller'
+  require 'rdio_search'
+  include RdioController
+  include RdioSearch
+else
+  require 'spotify_search'
+  require 'spotify_controller'
+  include SpotifyController
+  include SpotifySearch
+end
 
 set :root, File.dirname(__FILE__)+'/..'
 set :partial_template_engine, :slim
