@@ -5,7 +5,7 @@
     template = "<table class=\"table table-hover\">\n  <tbody>\n  {{#tracks}}\n    <tr>\n      <td>{{name}} {{duration}}</td>\n      <td><a class=\"enqueue-track\" data-id=\"{{id}}\" href=\"#\"><i class=\"icon-plus-sign\"></i></a></td>\n    </td>\n  {{/tracks}}\n  <tbody>\n</table>";
     enqueueTrackClickHandler = function() {
       hideMessage();
-      $.post('/track', {
+      $.post('/api/enqueue/track', {
         id: $(this).data('id')
       }, function(data) {
         return showMessage("" + data.name + " added to queue");

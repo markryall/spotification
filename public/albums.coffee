@@ -14,7 +14,7 @@ $ ->
 
   enqueueTrackClickHandler = ->
     hideMessage()
-    $.post '/track', id: $(this).data('id'), (data)->
+    $.post '/api/enqueue/track', id: $(this).data('id'), (data)->
       showMessage "#{data.name} added to queue"
     false
 
