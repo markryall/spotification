@@ -7,7 +7,7 @@ unless ENV['SPOTIFY_TERRITORY']
 end
 
 module SpotifySearch
-  def spotify_tracks_matching criteria
+  def tracks_matching criteria
     tracks = []
     results, info = spotify_search 'track', criteria
     results.each do |track|
@@ -23,7 +23,7 @@ module SpotifySearch
     return tracks, info
   end
 
-  def spotify_albums_matching criteria
+  def albums_matching criteria
     albums = []
     results, info = spotify_search 'album', criteria
     results.each do |album|
@@ -38,7 +38,7 @@ module SpotifySearch
     return albums, info
   end
 
-  def spotify_artists_matching criteria
+  def artists_matching criteria
     artists = []
     results, info = spotify_search 'artist', criteria
     results.each do |artist|
@@ -50,7 +50,7 @@ module SpotifySearch
     return artists, info
   end
 
-  def spotify_artist id
+  def artist_info id
     result = spotify_lookup "spotify:artist:#{id}", 'album'
     return {} unless result and result['artist']
     artist = result['artist']
@@ -67,7 +67,7 @@ module SpotifySearch
     artist
   end
 
-  def spotify_album id
+  def album_info id
     result = spotify_lookup "spotify:album:#{id}", 'track'
     return {} unless result and result['album']
     album = {
@@ -85,7 +85,7 @@ module SpotifySearch
     album
   end
 
-  def spotify_track id
+  def track_info id
     result = spotify_lookup "spotify:track:#{id}"
     return {} unless result and result['track']
     {
