@@ -89,7 +89,7 @@ $ ->
   show_artists = (data) ->
     template = """
     <p>{{title}}</p>
-    <ul id="albums-list" data-role="listview">
+    <ul id="artists-list" data-role="listview">
       {{#artists}}
         <li>
           <a href="#" data-id="{{id}}">{{name}}</a>
@@ -98,10 +98,17 @@ $ ->
     </ul>
     """
 
+    show_artist = ->
+      $.get "/api/artist/#{$(this).data('id')}",
+        (data) ->
+          console.log data
+          show_albums albums: data.albums, title: data.name
+
     content = Mustache.to_html template, data
     $('#artists .artists-content').html content
     $.mobile.changePage '#artists'
     $('#artists-list').listview()
+    $('#artists-list a').click show_artist
 
   $('#search-artists-form').submit ->
     $.mobile.loading 'show'

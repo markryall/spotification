@@ -77,12 +77,22 @@
       return false;
     });
     show_artists = function(data) {
-      var content, template;
-      template = "<p>{{title}}</p>\n<ul id=\"albums-list\" data-role=\"listview\">\n  {{#artists}}\n    <li>\n      <a href=\"#\" data-id=\"{{id}}\">{{name}}</a>\n    </li>\n  {{/artists}}\n</ul>";
+      var content, show_artist, template;
+      template = "<p>{{title}}</p>\n<ul id=\"artists-list\" data-role=\"listview\">\n  {{#artists}}\n    <li>\n      <a href=\"#\" data-id=\"{{id}}\">{{name}}</a>\n    </li>\n  {{/artists}}\n</ul>";
+      show_artist = function() {
+        return $.get("/api/artist/" + ($(this).data('id')), function(data) {
+          console.log(data);
+          return show_albums({
+            albums: data.albums,
+            title: data.name
+          });
+        });
+      };
       content = Mustache.to_html(template, data);
       $('#artists .artists-content').html(content);
       $.mobile.changePage('#artists');
-      return $('#artists-list').listview();
+      $('#artists-list').listview();
+      return $('#artists-list a').click(show_artist);
     };
     return $('#search-artists-form').submit(function() {
       $.mobile.loading('show');

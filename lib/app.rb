@@ -142,6 +142,10 @@ get '/tracks/:id' do |id|
   json album_info id
 end
 
+get '/api/artist/:id' do |id|
+  json artist_info id
+end
+
 get '/artist/:id' do |id|
   artist = artist_info id
   slim :artist, locals: {artist: artist}
