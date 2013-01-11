@@ -96,18 +96,22 @@ def change_volume inc
   json percentage: self.volume
 end
 
-post('/volume') do
+get '/api/volume' do
+  json percentage: volume
+end
+
+post '/api/volume' do
   self.volume = params[:percentage].to_i
   json percentage: self.volume
 end
 
-post('/volume/up') { change_volume 5 }
-post('/volume/down') { change_volume -5 }
+post('/api/volume/up') { change_volume 5 }
+post('/api/volume/down') { change_volume -5 }
 
-post('/player/rewind') { rewind }
-post('/player/fastforward') { fastforward }
+post('/api/player/rewind') { rewind }
+post('/api/player/fastforward') { fastforward }
 
-post '/player/playpause' do
+post '/api/player/playpause' do
   playpause
   json state: player_state
 end
