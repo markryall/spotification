@@ -19,6 +19,10 @@ module RdioController
     spotify_command "next track"
   end
 
+  def ready_for_next_track?
+    player_state == 'paused'
+  end
+
   def spotify_command command
     full_command = "osascript -e 'tell application \"Rdio\" to #{command}'"
     `#{full_command}`.chomp

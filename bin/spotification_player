@@ -16,7 +16,7 @@ end
 
 loop do
   begin
-    if player_state == 'paused'
+    if ready_for_next_track?
       track = dequeue
       if track
         puts "playing: #{track['name']} by #{track['artists']} from #{track['album']}"
