@@ -45,13 +45,13 @@ $ ->
     <ul id="albums-list" data-role="listview" data-split-icon="plus" data-split-theme="d">
       {{#albums}}
         <li>
-          <a href="#">
+          <a href="#" class='tracks' data-id="{{id}}">
             <img src="{{icon}}" class="ui-li-thumb">
             <h3 class="ui-li-heading">{{name}}</h3>
             <p class="ui-li-desc">{{artists}}</p>
             <p class="ui-li-desc">{{date}} - {{count}} tracks - {{duration}}</p>
           </a>
-          <a href="#" class='plus' data-album-id="{{id}}">add</a>
+          <a href="#" class='plus' data-id="{{id}}">add</a>
         </li>
       {{/albums}}
     </ul>
@@ -60,15 +60,22 @@ $ ->
     queue_album = ->
       remove = $(this).parent()
       $.post '/api/enqueue/album',
-        id: $(this).data('album-id'),
+        id: $(this).data('id'),
         success: ->
           remove.slideUp()
+
+    show_album = ->
+      $.get "/api/album/#{$(this).data('id')}",
+        (data) ->
+          console.log data
+          show_tracks tracks: data.tracks, title: data.name
 
     content = Mustache.to_html template, data
     $('#albums .albums-content').html content
     $.mobile.changePage '#albums'
     $('#albums-list').listview()
     $('#albums-list a.plus').click queue_album
+    $('#albums-list a.tracks').click show_album
 
   $('#search-albums-form').submit ->
     $.mobile.loading 'show'
@@ -85,7 +92,7 @@ $ ->
     <ul id="albums-list" data-role="listview">
       {{#artists}}
         <li>
-          <a href="#" data-track-id="{{id}}">{{name}}</a>
+          <a href="#" data-id="{{id}}">{{name}}</a>
         </li>
       {{/artists}}
     </ul>

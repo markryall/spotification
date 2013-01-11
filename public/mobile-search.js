@@ -35,23 +35,33 @@
       return false;
     });
     show_albums = function(data) {
-      var content, queue_album, template;
-      template = "<p>{{title}}</p>\n<ul id=\"albums-list\" data-role=\"listview\" data-split-icon=\"plus\" data-split-theme=\"d\">\n  {{#albums}}\n    <li>\n      <a href=\"#\">\n        <img src=\"{{icon}}\" class=\"ui-li-thumb\">\n        <h3 class=\"ui-li-heading\">{{name}}</h3>\n        <p class=\"ui-li-desc\">{{artists}}</p>\n        <p class=\"ui-li-desc\">{{date}} - {{count}} tracks - {{duration}}</p>\n      </a>\n      <a href=\"#\" class='plus' data-album-id=\"{{id}}\">add</a>\n    </li>\n  {{/albums}}\n</ul>";
+      var content, queue_album, show_album, template;
+      template = "<p>{{title}}</p>\n<ul id=\"albums-list\" data-role=\"listview\" data-split-icon=\"plus\" data-split-theme=\"d\">\n  {{#albums}}\n    <li>\n      <a href=\"#\" class='tracks' data-id=\"{{id}}\">\n        <img src=\"{{icon}}\" class=\"ui-li-thumb\">\n        <h3 class=\"ui-li-heading\">{{name}}</h3>\n        <p class=\"ui-li-desc\">{{artists}}</p>\n        <p class=\"ui-li-desc\">{{date}} - {{count}} tracks - {{duration}}</p>\n      </a>\n      <a href=\"#\" class='plus' data-id=\"{{id}}\">add</a>\n    </li>\n  {{/albums}}\n</ul>";
       queue_album = function() {
         var remove;
         remove = $(this).parent();
         return $.post('/api/enqueue/album', {
-          id: $(this).data('album-id'),
+          id: $(this).data('id'),
           success: function() {
             return remove.slideUp();
           }
+        });
+      };
+      show_album = function() {
+        return $.get("/api/album/" + ($(this).data('id')), function(data) {
+          console.log(data);
+          return show_tracks({
+            tracks: data.tracks,
+            title: data.name
+          });
         });
       };
       content = Mustache.to_html(template, data);
       $('#albums .albums-content').html(content);
       $.mobile.changePage('#albums');
       $('#albums-list').listview();
-      return $('#albums-list a.plus').click(queue_album);
+      $('#albums-list a.plus').click(queue_album);
+      return $('#albums-list a.tracks').click(show_album);
     };
     $('#search-albums-form').submit(function() {
       $.mobile.loading('show');
@@ -68,7 +78,7 @@
     });
     show_artists = function(data) {
       var content, template;
-      template = "<p>{{title}}</p>\n<ul id=\"albums-list\" data-role=\"listview\">\n  {{#artists}}\n    <li>\n      <a href=\"#\" data-track-id=\"{{id}}\">{{name}}</a>\n    </li>\n  {{/artists}}\n</ul>";
+      template = "<p>{{title}}</p>\n<ul id=\"albums-list\" data-role=\"listview\">\n  {{#artists}}\n    <li>\n      <a href=\"#\" data-id=\"{{id}}\">{{name}}</a>\n    </li>\n  {{/artists}}\n</ul>";
       content = Mustache.to_html(template, data);
       $('#artists .artists-content').html(content);
       $.mobile.changePage('#artists');

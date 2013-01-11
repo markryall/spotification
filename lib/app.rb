@@ -134,6 +134,10 @@ post '/api/enqueue/album' do
   json tracks: tracks
 end
 
+get '/api/album/:id' do |id|
+  json album_info id
+end
+
 get '/tracks/:id' do |id|
   json album_info id
 end
