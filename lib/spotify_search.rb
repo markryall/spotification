@@ -7,18 +7,50 @@ unless ENV['SPOTIFY_TERRITORY']
 end
 
 module SpotifySearch
+  def extract_id hash
+    hash['href'].split(':').last
+  end
+
+  def extract_artist hash
+    return hash['artist'] if hash['artist']
+    hash['artists'].map{|a| a['name']}.join(',')
+  end
+
+  def to_artist hash
+    {
+      'id'   => extract_id(hash),
+      'name' => hash['name']
+    }
+  end
+
+  def to_album hash
+    {
+      'id'      => extract_id(hash),
+      'name'    => hash['name'],
+      'artists' => extract_artist(hash),
+      'icon'    => '',
+      'date'    => '????',
+      'count'   => '?',
+      'duration' => '??:??'
+    }
+  end
+
+  def to_track hash, album_name=nil
+    {
+      'id'       => extract_id(hash),
+      'name'     => hash['name'],
+      'album'    => album_name ? album_name : hash['album']['name'],
+      'artists'  => extract_artist(hash),
+      'duration' => '??:??',
+      'icon'     => ''
+    }
+  end
+
   def tracks_matching criteria
     tracks = []
     results, info = spotify_search 'track', criteria
     results.each do |track|
-      if spotify_available? track['album']['availability']['territories']
-        tracks << {
-          'id' => track['href'].split(':').last,
-          'name' => track['name'],
-          'album' => track['album']['name'],
-          'artists' => track['artists'].map{|a| a['name']}.join(',')
-        }
-      end
+      tracks << to_track(track) if spotify_available? track['album']['availability']['territories']
     end
     return tracks, info
   end
@@ -27,13 +59,7 @@ module SpotifySearch
     albums = []
     results, info = spotify_search 'album', criteria
     results.each do |album|
-      if spotify_available? album['availability']['territories']
-        albums << {
-          'id' => album['href'].split(':').last,
-          'name' => album['name'],
-          'artists' => album['artists'].map{|a| a['name']}.join(',')
-        }
-      end
+      albums << to_album(album) if spotify_available? album['availability']['territories']
     end
     return albums, info
   end
@@ -42,10 +68,7 @@ module SpotifySearch
     artists = []
     results, info = spotify_search 'artist', criteria
     results.each do |artist|
-      artists << {
-        'id' => artist['href'].split(':').last,
-        'name' => artist['name']
-      }
+      artists << to_artist(artist)
     end
     return artists, info
   end
@@ -53,15 +76,10 @@ module SpotifySearch
   def artist_info id
     result = spotify_lookup "spotify:artist:#{id}", 'album'
     return {} unless result and result['artist']
-    artist = result['artist']
+    artist = to_artist result['artist']
     albums = []
-    artist['albums'].each do |album|
-      if spotify_available? album['album']['availability']['territories']
-        albums << {
-          'id' => album['album']['href'].split(':').last,
-          'name' => album['album']['name']
-        }
-      end
+    result['artist']['albums'].each do |album|
+      albums << to_album(album['album']) if spotify_available? album['album']['availability']['territories']
     end
     artist['albums'] = albums
     artist
@@ -70,30 +88,19 @@ module SpotifySearch
   def album_info id
     result = spotify_lookup "spotify:album:#{id}", 'track'
     return {} unless result and result['album']
-    album = {
-      'name' => result['album']['name'],
-      'tracks' => []
-    }
+    album = to_album result['album']
+    tracks = []
     result['album']['tracks'].each do |track|
-      album['tracks'] << {
-        'id' => track['href'].split(':').last,
-        'name' => track['name'],
-        'album' => album['name'],
-        'artists' => track['artists'].map{|a| a['name']}.join(',')
-      }
+      tracks << to_track(track, result['album']['name'])
     end
+    album['tracks'] = tracks
     album
   end
 
   def track_info id
     result = spotify_lookup "spotify:track:#{id}"
     return {} unless result and result['track']
-    {
-        'id' => id,
-        'name' => result['track']['name'],
-        'album' => result['track']['album']['name'],
-        'artists' => result['track']['artists'].map{|a| a['name']}.join(',')
-    }
+    to_track result['track']
   end
 
   def spotify_available? territories

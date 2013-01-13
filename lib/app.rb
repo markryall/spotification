@@ -29,18 +29,8 @@ get '/' do
   slim :queue, locals: { queue: self }
 end
 
-get '/api/queue' do
-  tracks = []
-  each_track { |track| tracks << track }
-  json tracks: tracks
-end
-
 get '/mobile' do
   slim :mobile, layout: false
-end
-
-post '/api/dequeue' do
-  destroy params[:id]
 end
 
 get '/tracks' do
@@ -53,12 +43,6 @@ post '/tracks' do
   slim :tracks, locals: {criteria: criteria, tracks: tracks, info: info }
 end
 
-get '/api/search/tracks' do
-  criteria = params[:criteria]
-  tracks, info = tracks_matching criteria
-  json tracks: tracks, info: info
-end
-
 get '/albums' do
   slim :albums, locals: {criteria: '', albums: [], info: nil}
 end
@@ -69,12 +53,6 @@ post '/albums' do
   slim :albums, locals: {criteria: criteria, albums: albums, info: info }
 end
 
-get '/api/search/albums' do
-  criteria = params[:criteria]
-  albums, info = albums_matching criteria
-  json albums: albums, info: info
-end
-
 get '/artists' do
   slim :artists, locals: {criteria: '', artists: [], info: nil}
 end
@@ -83,6 +61,38 @@ post '/artists' do
   criteria = params[:criteria]
   artists, info = artists_matching criteria
   slim :artists, locals: {criteria: criteria, artists: artists, info: info }
+end
+
+if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
+  require 'lastfm'
+
+  include Lastfm
+
+  get '/lastfm' do
+    slim :lastfm, locals: {tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER']) }
+  end
+end
+
+get '/api/queue' do
+  tracks = []
+  each_track { |track| tracks << track }
+  json tracks: tracks
+end
+
+post '/api/dequeue' do
+  destroy params[:id]
+end
+
+get '/api/search/tracks' do
+  criteria = params[:criteria]
+  tracks, info = tracks_matching criteria
+  json tracks: tracks, info: info
+end
+
+get '/api/search/albums' do
+  criteria = params[:criteria]
+  albums, info = albums_matching criteria
+  json albums: albums, info: info
 end
 
 get '/api/search/artists' do
@@ -138,10 +148,6 @@ get '/api/album/:id' do |id|
   json album_info id
 end
 
-get '/tracks/:id' do |id|
-  json album_info id
-end
-
 get '/api/artist/:id' do |id|
   json artist_info id
 end
@@ -149,14 +155,4 @@ end
 get '/artist/:id' do |id|
   artist = artist_info id
   slim :artist, locals: {artist: artist}
-end
-
-if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
-  require 'lastfm'
-
-  include Lastfm
-
-  get '/lastfm' do
-    slim :lastfm, locals: {tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER']) }
-  end
 end

@@ -25,7 +25,7 @@
       var id;
       hideMessage();
       id = $(this).data('id');
-      $.get("/tracks/" + id, {}, function(data) {
+      $.get("/api/album/" + id, {}, function(data) {
         var list;
         showMessage("" + data.tracks.length + " tracks retrieved");
         list = Mustache.to_html(template, data);
