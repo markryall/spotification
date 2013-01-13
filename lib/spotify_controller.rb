@@ -1,29 +1,29 @@
 module SpotifyController
   def player_state
-    spotify_command "player state"
+    tell_spotify_to "player state"
   end
 
   def play id
-    spotify_command "open location \"spotify:track:#{id}\""
+    tell_spotify_to "open location \"spotify:track:#{id}\""
   end
 
   def playpause
-    spotify_command "playpause"
+    tell_spotify_to "playpause"
   end
 
   def rewind
-    spotify_command "previous track"
+    tell_spotify_to "previous track"
   end
 
   def fastforward
-    spotify_command "next track"
+    tell_spotify_to "next track"
   end
 
   def ready_for_next_track?
     player_state == 'stopped'
   end
 
-  def spotify_command command
+  def tell_spotify_to command
     full_command = "osascript -e 'tell application \"Spotify\" to #{command}'"
     `#{full_command}`.chomp
   end

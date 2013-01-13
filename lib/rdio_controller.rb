@@ -1,29 +1,29 @@
 module RdioController
   def player_state
-    spotify_command "get the player state"
+    tell_rdio_to "get the player state"
   end
 
   def play id
-    spotify_command "play source \"#{id}\""
+    tell_rdio_to "play source \"#{id}\""
   end
 
   def playpause
-    spotify_command "playpause"
+    tell_rdio_to "playpause"
   end
 
   def rewind
-    spotify_command "previous track"
+    tell_rdio_to "previous track"
   end
 
   def fastforward
-    spotify_command "next track"
+    tell_rdio_to "next track"
   end
 
   def ready_for_next_track?
     player_state == 'paused'
   end
 
-  def spotify_command command
+  def tell_rdio_to command
     full_command = "osascript -e 'tell application \"Rdio\" to #{command}'"
     `#{full_command}`.chomp
   end
