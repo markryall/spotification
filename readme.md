@@ -53,6 +53,8 @@ Now in an irb session
 
 Now set the RDIO_CLIENT_KEY and RDIO_CLIENT_SECRET environment variables from the return values.
 
+You also need to set the SPOTIFICATION_MODE environment variable to rdio (default behaviour is to use spotify).
+
 So easy!
 
 ## Usage
