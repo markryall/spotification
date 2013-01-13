@@ -23,15 +23,15 @@ module SpotifySearch
     }
   end
 
-  def to_album hash
+  def to_album hash, count=0
     {
       'id'      => extract_id(hash),
       'name'    => hash['name'],
       'artists' => extract_artist(hash),
       'icon'    => '',
-      'date'    => '????',
-      'count'   => '?',
-      'duration' => '??:??'
+      'date'    => hash['released'] ? hash['released'] : '????',
+      'count'   => count,
+      'duration' => to_duration(hash)
     }
   end
 
@@ -41,9 +41,14 @@ module SpotifySearch
       'name'     => hash['name'],
       'album'    => album_name ? album_name : hash['album']['name'],
       'artists'  => extract_artist(hash),
-      'duration' => '??:??',
+      'duration' => to_duration(hash),
       'icon'     => ''
     }
+  end
+
+  def to_duration hash
+    duration = hash['length'].to_i
+    "%02d:%02d" % [duration/60,duration%60]
   end
 
   def tracks_matching criteria
@@ -74,7 +79,7 @@ module SpotifySearch
   end
 
   def artist_info id
-    result = spotify_lookup "spotify:artist:#{id}", 'album'
+    result = spotify_lookup "spotify:artist:#{id}", 'albumdetail'
     return {} unless result and result['artist']
     artist = to_artist result['artist']
     albums = []
@@ -86,9 +91,9 @@ module SpotifySearch
   end
 
   def album_info id
-    result = spotify_lookup "spotify:album:#{id}", 'track'
+    result = spotify_lookup "spotify:album:#{id}", 'trackdetail'
     return {} unless result and result['album']
-    album = to_album result['album']
+    album = to_album result['album'], result['album']['tracks'].count
     tracks = []
     result['album']['tracks'].each do |track|
       tracks << to_track(track, result['album']['name'])
