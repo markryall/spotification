@@ -8,6 +8,7 @@ $ ->
           <h3 class="ui-li-heading">{{name}}</h3>
           <p class="ui-li-desc">{{album}}</p>
           <p class="ui-li-desc">{{artist}}</p>
+          <p class="ui-li-desc">{{when}}</p>
         </a>
       </li>
     {{/tracks}}
