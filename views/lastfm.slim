@@ -2,8 +2,9 @@
   div.hero-unit
     div.row
       div.span3
-        img src="#{track['image'].find{|i| i['size'] == 'large'}['#text']}"
+        img src="#{track['image-large']}"
       div.span3
         h2 = track['name']
-        p = track['album']['#text']
-        p = track['artist']['#text']
+        p = track['album']
+        p = track['artist']
+        p = Time.at track['date']

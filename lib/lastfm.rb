@@ -10,7 +10,18 @@ module Lastfm
     response = get_url "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&nowplaying=true&user=#{user}&api_key=#{ENV['LASTFM_API_KEY']}&format=json"
     tracks = []
     tracks = response['recenttracks']['track'] if response && response['recenttracks'] && response['recenttracks']['track']
-    tracks
+    tracks.map do |track|
+      t = {
+        'name' => track['name'],
+        'artist' => track['artist']['#text'],
+        'album' => track['album']['#text'],
+        'date' => track['date']['uts'].to_i
+      }
+      track['image'].each do |image|
+        t["image-#{image['size']}"] = image['#text']
+      end
+      t
+    end
   end
 
   def get_url url

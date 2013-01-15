@@ -19,9 +19,9 @@ Install prerequisites:
 
 There are two processes: the web server process and the player.
 
-The web server allows remote users to search spotify for tracks (using the spotify web api) and enqueue them.  If configiured, the web server can also show the recently played tracks for a given user on lastfm (using the lastfm api).
+The web server allows remote users to search rdio/spotify for tracks (using the their web api), enqueue tracks/albums, control volume and skip tracks.  If configured, the web server can also show the recently played tracks for a given user on lastfm (using the lastfm api).
 
-The player monitors the spotify application and the queue (using applescript - hence the mac os x restriction).  When spotify has stopped playing, the player will tell it to start playing the next track in the queue.  Note that this queue has nothing to do with the spotify queue.
+The player monitors the spotify/rdio mac os x applications and the queue (using applescript - hence the mac os x restriction).  When spotify/rdio has stopped playing, the player will tell it to start playing the next track in the queue.  Note that this queue has nothing to do with the spotify/rdio queue (it is a directory containing a file for each queued track).
 
 So in one terminal session:
 

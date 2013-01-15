@@ -63,14 +63,9 @@ post '/artists' do
   slim :artists, locals: {criteria: criteria, artists: artists, info: info }
 end
 
-if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
-  require 'lastfm'
-
-  include Lastfm
-
-  get '/lastfm' do
-    slim :lastfm, locals: {tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER']) }
-  end
+get '/artist/:id' do |id|
+  artist = artist_info id
+  slim :artist, locals: {artist: artist}
 end
 
 get '/api/queue' do
@@ -152,7 +147,16 @@ get '/api/artist/:id' do |id|
   json artist_info id
 end
 
-get '/artist/:id' do |id|
-  artist = artist_info id
-  slim :artist, locals: {artist: artist}
+if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
+  require 'lastfm'
+
+  include Lastfm
+
+  get '/lastfm' do
+    slim :lastfm, locals: {tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER']) }
+  end
+
+  get '/api/lastfm' do
+    json recent_lastfm_tracks_for ENV['LAST_FM_USER']
+  end
 end
