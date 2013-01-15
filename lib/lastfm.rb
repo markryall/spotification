@@ -18,7 +18,7 @@ module Lastfm
         'date' => track['date']['uts'].to_i
       }
       track['image'].each do |image|
-        t["image-#{image['size']}"] = image['#text']
+        t['image'] = image['#text'] if image['size'] = 'large'
       end
       t
     end

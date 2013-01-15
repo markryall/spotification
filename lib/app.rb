@@ -156,7 +156,7 @@ if ENV['LASTFM_API_KEY'] and ENV['LAST_FM_USER']
     slim :lastfm, locals: {tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER']) }
   end
 
-  get '/api/lastfm' do
-    json recent_lastfm_tracks_for ENV['LAST_FM_USER']
+  get '/api/lastfm' do |size|
+    json tracks: recent_lastfm_tracks_for(ENV['LAST_FM_USER'])
   end
 end

@@ -8,6 +8,8 @@ div id="main" data-role="page"
       - %w{track album artist}.each do |by|
         li
           a href="#search-#{by}s" search for #{by}
+      li
+        a href="#lastfm" last.fm
 
     label for="volume-slider" Volume:
     input name="volume-slider" id="volume-slider" value="60" min="0" max="100"
